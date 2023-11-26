@@ -3,7 +3,6 @@ package drive
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"time"
 )
 
@@ -12,7 +11,7 @@ const MaxRateInterval = time.Second * 3
 
 func getProgressReader(r io.Reader, w io.Writer, size int64) io.Reader {
 	// Don't wrap reader if output is discarded or size is too small
-	if w == ioutil.Discard || (size > 0 && size < 1024*1024) {
+	if w == io.Discard || (size > 0 && size < 1024*1024) {
 		return r
 	}
 

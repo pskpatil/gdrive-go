@@ -1,40 +1,63 @@
-## News
-#### 01.01.2023
-Work has started on [Gdrive 3.0](https://github.com/glotlabs/gdrive) which will replace this project.
-It is not quite ready yet, but you can follow the progress.
+## IMPORTANT
+This repository is forked and built upon [Gdrive 2](https://github.com/prasmussen/gdrive), which is not maintained anymore.
+[Petter Rasmussen](https://github.com/prasmussen) has developed new project [Gdrive 3](https://github.com/glotlabs/gdrive), a complete re-write in rust, as a successor to Gdrive 2.
 
-Gdrive3 will only implement the most requested functionality.
-If you have specific features that you want implemented please create an issue or join the discord to dicuss.
+Many thanks to Peter, for such a detailed documentation.<br/>
+I am sure, that Gdrive 3 would be more actively developed, than I would do here Gdrive 2+.
 
+
+```
+   ____     _      _             ____       
+  / ___| __| |_ __(_)_   _____  |___ \  _   
+ | |  _ / _` | '__| \ \ / / _ \   __) || |_ 
+ | |_| | (_| | |  | |\ V /  __/  / __/_   _|
+  \____|\__,_|_|  |_| \_/ \___| |_____||_|  
+                                            
+```
 
 ## Prerequisites
 None, binaries are statically linked.
 If you want to compile from source you need the [go toolchain](http://golang.org/doc/install).
-Version 1.5 or higher.
+
+Tested with go version 1.21.4.
 
 ## Installation
-### With [Homebrew](http://brew.sh) on Mac
-```
-brew install gdrive
-```
-### Other
-Download `gdrive` from one of the [links in the latest release](https://github.com/prasmussen/gdrive/releases).
+
+Download `gdrive` from one of the [links in the latest release](https://github.com/pskpatil/gdrive/releases).
+
 The first time gdrive is launched (i.e. run `gdrive about` in your
-terminal not just `gdrive`), you will be prompted for a verification code.
-The code is obtained by following the printed url and authenticating with the
-google account for the drive you want access to. This will create a token file
-inside the .gdrive folder in your home directory. Note that anyone with access
-to this file will also have access to your google drive.
+terminal not just `gdrive`), you will be prompted for a verification code.<br/>
+The code is obtained by following the printed url and authenticating with the google account for the drive you want access to. This will create a token file
+inside the .gdrive folder in your home directory.
+
+_**Security Note**_: anyone with access
+to this token file from .gdrive will also have access to your google drive.
+~ `I am planning to curtail this, lets see how it goes.` ~
+
 If you want to manage multiple drives you can use the global `--config` flag
-or set the environment variable `GDRIVE_CONFIG_DIR`.
-Example: `GDRIVE_CONFIG_DIR="/home/user/.gdrive-secondary" gdrive list`
+or set the environment variable `GDRIVE_CONFIG_DIR`.<br/>
+Example:<br/>
+
+    GDRIVE_CONFIG_DIR="/home/user/.gdrive-secondary" gdrive list
+
 You will be prompted for a new verification code if the folder does not exist.
 
+
 ## Compile from source
-```bash
-go get github.com/prasmussen/gdrive
-```
-The gdrive binary should now be available at `$GOPATH/bin/gdrive`
+
+    go build
+
+or,
+
+    go get github.com/pskpatil/gdrive
+    # The gdrive binary should now be available at `$GOPATH/bin/gdrive`
+
+or,
+
+    git clone https://github.com/pskpatil/gdrive.git
+    cd gdrive
+    ./_release/build-all.sh
+
 
 
 ### Syncing

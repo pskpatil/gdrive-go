@@ -3,7 +3,6 @@ package drive
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"path/filepath"
 	"time"
 )
@@ -48,7 +47,7 @@ func (self *Drive) DownloadRevision(args DownloadRevisionArgs) (err error) {
 	// Discard other output if file is written to stdout
 	out := args.Out
 	if args.Stdout {
-		out = ioutil.Discard
+		out = io.Discard
 	}
 
 	// Path to file

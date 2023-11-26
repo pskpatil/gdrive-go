@@ -14,7 +14,7 @@ import (
 type DownloadArgs struct {
 	Out       io.Writer
 	Progress  io.Writer
-	Id        string
+	ID        string
 	Path      string
 	Force     bool
 	Skip      bool
@@ -29,7 +29,7 @@ func (self *Drive) Download(args DownloadArgs) error {
 		return self.downloadRecursive(args)
 	}
 
-	f, err := self.service.Files.Get(args.Id).Fields("id", "name", "size", "mimeType", "md5Checksum").Do()
+	f, err := self.service.Files.Get(args.ID).Fields("id", "name", "size", "mimeType", "md5Checksum").Do()
 	if err != nil {
 		return fmt.Errorf("Failed to get file: %s", err)
 	}
@@ -52,13 +52,13 @@ func (self *Drive) Download(args DownloadArgs) error {
 	}
 
 	if args.Delete {
-		err = self.deleteFile(args.Id)
+		err = self.deleteFile(args.ID)
 		if err != nil {
 			return fmt.Errorf("Failed to delete file: %s", err)
 		}
 
 		if !args.Stdout {
-			fmt.Fprintf(args.Out, "Removed %s\n", args.Id)
+			fmt.Fprintf(args.Out, "Removed %s\n", args.ID)
 		}
 	}
 	return err
@@ -108,7 +108,7 @@ func (self *Drive) DownloadQuery(args DownloadQueryArgs) error {
 }
 
 func (self *Drive) downloadRecursive(args DownloadArgs) error {
-	f, err := self.service.Files.Get(args.Id).Fields("id", "name", "size", "mimeType", "md5Checksum").Do()
+	f, err := self.service.Files.Get(args.ID).Fields("id", "name", "size", "mimeType", "md5Checksum").Do()
 	if err != nil {
 		return fmt.Errorf("Failed to get file: %s", err)
 	}
@@ -239,7 +239,7 @@ func (self *Drive) downloadDirectory(parent *drive.File, args DownloadArgs) erro
 		// Copy args and update changed fields
 		newArgs := args
 		newArgs.Path = newPath
-		newArgs.Id = f.Id
+		newArgs.ID = f.Id
 		newArgs.Stdout = false
 
 		err = self.downloadRecursive(newArgs)

@@ -3,7 +3,6 @@ package drive
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"mime"
 	"path/filepath"
 	"strings"
@@ -37,7 +36,7 @@ func (self *Drive) Import(args ImportArgs) error {
 	}
 
 	f, _, err := self.uploadFile(UploadArgs{
-		Out:      ioutil.Discard,
+		Out:      io.Discard,
 		Progress: args.Progress,
 		Path:     args.Path,
 		Parents:  args.Parents,

@@ -3,13 +3,14 @@ package drive
 import (
 	"bytes"
 	"fmt"
-	"google.golang.org/api/drive/v3"
-	"google.golang.org/api/googleapi"
 	"io"
 	"os"
 	"path/filepath"
 	"sort"
 	"time"
+
+	"google.golang.org/api/drive/v3"
+	"google.golang.org/api/googleapi"
 )
 
 type UploadSyncArgs struct {
@@ -380,7 +381,7 @@ func (self *Drive) deleteRemoteFile(rf *RemoteFile, args UploadSyncArgs, try int
 			try++
 			return self.deleteRemoteFile(rf, args, try)
 		} else {
-			return fmt.Errorf("Failed to delete file: %s", err)
+			return fmt.Errorf("failed to delete file: %s", err.Error())
 		}
 	}
 
@@ -391,7 +392,7 @@ func (self *Drive) dirIsEmpty(id string) (bool, error) {
 	query := fmt.Sprintf("'%s' in parents", id)
 	fileList, err := self.service.Files.List().Q(query).Do()
 	if err != nil {
-		return false, fmt.Errorf("Empty dir check failed: ", err)
+		return false, fmt.Errorf("empty dir check failed: %s", err.Error())
 	}
 
 	return len(fileList.Files) == 0, nil

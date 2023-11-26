@@ -18,14 +18,14 @@ var DefaultExportMime = map[string]string{
 
 type ExportArgs struct {
 	Out        io.Writer
-	Id         string
+	ID         string
 	PrintMimes bool
 	Mime       string
 	Force      bool
 }
 
 func (self *Drive) Export(args ExportArgs) error {
-	f, err := self.service.Files.Get(args.Id).Fields("name", "mimeType").Do()
+	f, err := self.service.Files.Get(args.ID).Fields("name", "mimeType").Do()
 	if err != nil {
 		return fmt.Errorf("Failed to get file: %s", err)
 	}
@@ -41,7 +41,7 @@ func (self *Drive) Export(args ExportArgs) error {
 
 	filename := getExportFilename(f.Name, exportMime)
 
-	res, err := self.service.Files.Export(args.Id, exportMime).Download()
+	res, err := self.service.Files.Export(args.ID, exportMime).Download()
 	if err != nil {
 		return fmt.Errorf("Failed to download file: %s", err)
 	}

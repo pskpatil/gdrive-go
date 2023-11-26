@@ -2,18 +2,19 @@ package drive
 
 import (
 	"fmt"
-	"google.golang.org/api/drive/v3"
 	"io"
+
+	"google.golang.org/api/drive/v3"
 )
 
 type FileInfoArgs struct {
 	Out         io.Writer
-	Id          string
+	ID          string
 	SizeInBytes bool
 }
 
 func (self *Drive) Info(args FileInfoArgs) error {
-	f, err := self.service.Files.Get(args.Id).Fields("id", "name", "size", "createdTime", "modifiedTime", "md5Checksum", "mimeType", "parents", "shared", "description", "webContentLink", "webViewLink").Do()
+	f, err := self.service.Files.Get(args.ID).Fields("id", "name", "size", "createdTime", "modifiedTime", "md5Checksum", "mimeType", "parents", "shared", "description", "webContentLink", "webViewLink").Do()
 	if err != nil {
 		return fmt.Errorf("Failed to get file: %s", err)
 	}
@@ -45,19 +46,19 @@ func PrintFileInfo(args PrintFileInfoArgs) {
 	f := args.File
 
 	items := []kv{
-		kv{"Id", f.Id},
-		kv{"Name", f.Name},
-		kv{"Path", args.Path},
-		kv{"Description", f.Description},
-		kv{"Mime", f.MimeType},
-		kv{"Size", formatSize(f.Size, args.SizeInBytes)},
-		kv{"Created", formatDatetime(f.CreatedTime)},
-		kv{"Modified", formatDatetime(f.ModifiedTime)},
-		kv{"Md5sum", f.Md5Checksum},
-		kv{"Shared", formatBool(f.Shared)},
-		kv{"Parents", formatList(f.Parents)},
-		kv{"ViewUrl", f.WebViewLink},
-		kv{"DownloadUrl", f.WebContentLink},
+		{"Id", f.Id},
+		{"Name", f.Name},
+		{"Path", args.Path},
+		{"Description", f.Description},
+		{"Mime", f.MimeType},
+		{"Size", formatSize(f.Size, args.SizeInBytes)},
+		{"Created", formatDatetime(f.CreatedTime)},
+		{"Modified", formatDatetime(f.ModifiedTime)},
+		{"Md5sum", f.Md5Checksum},
+		{"Shared", formatBool(f.Shared)},
+		{"Parents", formatList(f.Parents)},
+		{"ViewUrl", f.WebViewLink},
+		{"DownloadUrl", f.WebContentLink},
 	}
 
 	for _, item := range items {

@@ -2,9 +2,10 @@ package drive
 
 import (
 	"fmt"
-	"google.golang.org/api/drive/v3"
 	"io"
 	"text/tabwriter"
+
+	"google.golang.org/api/drive/v3"
 )
 
 type ShareArgs struct {
@@ -44,7 +45,7 @@ type RevokePermissionArgs struct {
 func (self *Drive) RevokePermission(args RevokePermissionArgs) error {
 	err := self.service.Permissions.Delete(args.FileId, args.PermissionId).Do()
 	if err != nil {
-		fmt.Errorf("Failed to revoke permission: %s", err)
+		fmt.Errorf("Failed to revoke permission: %s", err.Error())
 		return err
 	}
 

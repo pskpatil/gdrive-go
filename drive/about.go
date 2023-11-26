@@ -14,7 +14,7 @@ type AboutArgs struct {
 func (self *Drive) About(args AboutArgs) (err error) {
 	about, err := self.service.About.Get().Fields("maxImportSizes", "maxUploadSize", "storageQuota", "user").Do()
 	if err != nil {
-		return fmt.Errorf("Failed to get about: %s", err)
+		return fmt.Errorf("failed to get about: %s", err.Error())
 	}
 
 	user := about.User
@@ -35,7 +35,7 @@ type AboutImportArgs struct {
 func (self *Drive) AboutImport(args AboutImportArgs) (err error) {
 	about, err := self.service.About.Get().Fields("importFormats").Do()
 	if err != nil {
-		return fmt.Errorf("Failed to get about: %s", err)
+		return fmt.Errorf("failed to get about: %s", err.Error())
 	}
 	printAboutFormats(args.Out, about.ImportFormats)
 	return
@@ -48,7 +48,7 @@ type AboutExportArgs struct {
 func (self *Drive) AboutExport(args AboutExportArgs) (err error) {
 	about, err := self.service.About.Get().Fields("exportFormats").Do()
 	if err != nil {
-		return fmt.Errorf("Failed to get about: %s", err)
+		return fmt.Errorf("failed to get about: %s", err.Error())
 	}
 	printAboutFormats(args.Out, about.ExportFormats)
 	return

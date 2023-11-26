@@ -3,15 +3,14 @@ package main
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
 	"time"
 
-	"github.com/prasmussen/gdrive/auth"
-	"github.com/prasmussen/gdrive/cli"
-	"github.com/prasmussen/gdrive/drive"
+	"github.com/pskpatil/gdrive/auth"
+	"github.com/pskpatil/gdrive/cli"
+	"github.com/pskpatil/gdrive/drive"
 )
 
 const ClientId = "367116221053-7n0vf5akeru7on6o2fjinrecpdoe99eg.apps.googleusercontent.com"
@@ -52,7 +51,7 @@ func downloadHandler(ctx cli.Context) {
 	checkDownloadArgs(args)
 	err := newDrive(args).Download(drive.DownloadArgs{
 		Out:       os.Stdout,
-		Id:        args.String("fileId"),
+		ID:        args.String("fileId"),
 		Force:     args.Bool("force"),
 		Skip:      args.Bool("skip"),
 		Path:      args.String("path"),
@@ -187,7 +186,7 @@ func infoHandler(ctx cli.Context) {
 	args := ctx.Args()
 	err := newDrive(args).Info(drive.FileInfoArgs{
 		Out:         os.Stdout,
-		Id:          args.String("fileId"),
+		ID:          args.String("fileId"),
 		SizeInBytes: args.Bool("sizeInBytes"),
 	})
 	checkErr(err)
@@ -209,7 +208,7 @@ func exportHandler(ctx cli.Context) {
 	args := ctx.Args()
 	err := newDrive(args).Export(drive.ExportArgs{
 		Out:        os.Stdout,
-		Id:         args.String("fileId"),
+		ID:         args.String("fileId"),
 		Mime:       args.String("mime"),
 		PrintMimes: args.Bool("printMimes"),
 		Force:      args.Bool("force"),
@@ -277,7 +276,7 @@ func deleteHandler(ctx cli.Context) {
 	args := ctx.Args()
 	err := newDrive(args).Delete(drive.DeleteArgs{
 		Out:       os.Stdout,
-		Id:        args.String("fileId"),
+		ID:        args.String("fileId"),
 		Recursive: args.Bool("recursive"),
 	})
 	checkErr(err)
@@ -407,7 +406,7 @@ func authCodePrompt(url string) func() string {
 
 func progressWriter(discard bool) io.Writer {
 	if discard {
-		return ioutil.Discard
+		return io.Discard
 	}
 	return os.Stderr
 }

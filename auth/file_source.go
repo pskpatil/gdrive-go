@@ -2,9 +2,9 @@ package auth
 
 import (
 	"encoding/json"
-	"golang.org/x/oauth2"
-	"io/ioutil"
 	"os"
+
+	"golang.org/x/oauth2"
 )
 
 func FileSource(path string, token *oauth2.Token, conf *oauth2.Config) oauth2.TokenSource {
@@ -36,13 +36,12 @@ func ReadFile(path string) ([]byte, bool, error) {
 		return nil, false, nil
 	}
 
-	content, err := ioutil.ReadFile(path)
+	content, err := os.ReadFile(path)
 	if err != nil {
 		return nil, true, err
 	}
 	return content, true, nil
 }
-
 
 func ReadToken(path string) (*oauth2.Token, bool, error) {
 
@@ -67,7 +66,7 @@ func SaveToken(path string, token *oauth2.Token) error {
 
 	// Write to temp file first
 	tmpFile := path + ".tmp"
-	err = ioutil.WriteFile(tmpFile, data, 0600)
+	err = os.WriteFile(tmpFile, data, 0600)
 	if err != nil {
 		os.Remove(tmpFile)
 		return err
